@@ -9,10 +9,9 @@ from scipy.integrate import quad
 import numpy as np
 from sympy import solve, linsolve,symbols
 
-
 from sympy import *
 
-N=3.0                   #Number of years measurements are taken
+N=1.0                   #Number of years measurements are taken
 t0=-N/2                 #lower integral limit
 t1=N/2                  #upper integral limit
 n=1/N                #number of measurements taken each year
@@ -28,18 +27,24 @@ def i_t0(t):
     return t**0
 def i_t2(t):
     return t**2
+print int(i_t2),'t2'
 def i_t4(t):
     return (t**4) 
 def i_tsin(t):
     return t*np.sin(2*np.pi*t)
+print int(i_tsin),'tsin'
 def i_tqcos(t):
     return (t**2)*np.cos(2*np.pi*t)
+print int(i_tqcos),'tqcos'
 def i_sinq(t):
     return (np.sin(2*np.pi*t))**2
+print int(i_sinq),'sinq'
 def i_tsincos(t):
     return t*np.sin(2*np.pi*t)*np.cos(2*np.pi*t)
+print int(i_tsincos),'tsincos'
 def i_tqcosq(t):
     return (t**2)*(np.cos(2*np.pi*t))**2
+print int(i_tqcosq),'tqcos'
 def i_cos(t):
     return np.cos(2*np.pi*t)        
 def i_tcsin(t):
@@ -66,19 +71,17 @@ def i_sincos(t):
     return np.sin(2*np.pi*t)*np.cos(2*np.pi*t)
 def i_tsinfsin(t):
     return (t)*(np.sin(4*np.pi*t))*np.sin(2*np.pi*t) 
-L11=1.0
 
-L22=np.sqrt(1/(n*int(i_t2)))
-print L22,'22'
+L221=np.sqrt(1/(n*int(i_t2)))
 
 def third(l,m):
-    return L31*l+L33*m
+    return L311*l+L331*m
 def fourth(q,r):
-    return L42*q+L44*r
+    return L421*q+L441*r
 def fifth(n,o,p):
-    return L51*n+L53*o+L55*p
+    return L511*n+L531*o+L551*p
 def sixth(s,t,u):
-    return L62*s+L64*t+L66*u
+    return L621*s+L641*t+L661*u
     
 def odd_first(a,b,c,d):
     odd_first=a*int(i_t0)+b*int(i_t2)+c*int(i_cos)+d*int(i_tsin)
@@ -129,20 +132,21 @@ def const(f,var1,var2):
     return var1,var2
 #print const(f=odd_first(L31,L33,0,0),odd_fourth(L31,L33,0,0),var1=L31,var2=L33)
 
-L31,L33=symbols('L31 L33')
-const_3=solve([odd_first(L31,L33,0,0),odd_fourth(L31,L33,0,0)],(L31,L33))
+L311,L331=symbols('L311 L331')
+const_3=solve([odd_first(L311,L331,0,0),odd_fourth(L311,L331,0,0)],(L311,L331))
 u3=const_3[0]
-L31=float(u3[0])
-L33=float(u3[1])
+L311=float(u3[0])
+L331=float(u3[1])
 print const_3
-print L33
-
-L42,L44=symbols('L42 L44')
-const_4=solve([even_first(L42,L44,0,0),even_fourth(L42,L44,0,0)],(L42,L44))
+print L311
+print L331
+L421,L441=symbols('L421 L441')
+const_4=solve([even_first(L421,L441,0,0),even_fourth(L421,L441,0,0)],(L421,L441))
 u4=const_4[0]
-L42=float(u4[0])
-L44=float(u4[1])
-
+L421=float(u4[0])
+L441=float(u4[1])
+print L421
+print L441
 
 #L42=-0.310785320218 
 #L44=1.46454131826 
@@ -152,46 +156,44 @@ L44=float(u4[1])
 #L51=-0.120095065498 
 #L53=0.160126753998 
 #L55=1.42234894439 
-L51,L53,L55=symbols('L51 L53 L55')
-const_5=solve([odd_first(L51,L53,L55,0),odd_second(L51,L53,L55,0),odd_fourth(L51,L53,L55,0)],(L51,L53,L55))
+L511,L531,L551=symbols('L511 L531 L551')
+const_5=solve([odd_first(L511,L531,L551,0),odd_second(L511,L531,L551,0),odd_fourth(L511,L531,L551,0)],(L511,L531,L551))
 u5=const_5[0]
-L51=float(u5[0])
-L53=float(u5[1])
-L55=float(u5[2])
-print L51,'51'
-print L53,'53'
-print L55,'55'
+L511=float(u5[0])
+L531=float(u5[1])
+L551=float(u5[2])
+print L511
+print L531
+print L551
 
-L62,L64,L66=symbols('L62 L64 L66')
-const_6=solve([psi6_first(L62,L64,L66,0),psi6_second(L62,L64,L66,0),psi6_fourth(L62,L64,L66,0)],(L62,L64,L66))
-u6=const_6[0]
-L62=float(u6[0])
-L64=float(u6[1])
-L66=float(u6[2])
-print L62,'62'
-print L64,'64'
-print L66,'66'
+L821,L841,L881=symbols('L821 L841 L881')
+const_81=linsolve([even_first(L821,L841,0,L881),even_second(L821,L841,0,L881)],(L821,L841,L881))
+print const_81,'8'
+L881=symbols('L881')
+print solve([even_fourth(2.43559211327032*L881,-0.775273048365215*L881,0, L881)],(L881)),'8'
+L881=1.80721722834535
+L821=2.43559211327032*L881
+L841=-0.775273048365215*L881
 
+L711,L731,L751,L771=symbols('L711 L731 L751 L771')
+const_71=linsolve([odd_first(L711,L731,L751,L771),odd_second(L711,L731,L751,L771),odd_third(L711,L731,L751,L771)],(L711,L731,L751,L771))
+print const_71,'7'
 
+L771=symbols('L771')
+print solve([odd_fourth(-0.493279293384018*L771, 4.00949220350547*L771, 0.485823967409847*L771, L771)],L771),'7'
+L771=150.155695401174
+L711=-0.493279293384018*L771
+L731=4.00949220350547*L771
+L751=0.485823967409847*L771
 
-L82,L84,L88=symbols('L82 L84 L88')
-const_8=linsolve([even_first(L82,L84,0,L88),even_second(L82,L84,0,L88)],(L82,L84,L88))
-print const_8,'8'
+L621,L641,L661=symbols('L621 L641 L661')
+const_6=linsolve([psi6_first(L621,L641,L661,0),psi6_second(L621,L641,L661,0)],(L621,L641,L661))
+#const_6=solve([psi6_first(L621,L641,L661,0),psi6_second(L621,L641,L661,0),psi6_fourth(L621,L641,L661,0)],(L621,L641,L661))
+print solve([psi6_fourth(1.16290957254782*L661, -0.290588142133791*L661,L661,0)],L661),'6'
+L661=39.2931624618610
+L621=1.16290957254782*L661
+L641=-0.290588142133791*L661
+
 #print type(const_8)
 #L82=float(const_8.pop()) #removes and returns the first element of the set
-#L84=float(const_8.pop())
-L88=symbols('L88')
-#print solve([even_fourth(L82,L84,0, L88)],(L88)),'8'
-L88=1.42719598251935
-L82=0.11378948564214*L88
-L84=-0.0362203182236615*L88
 
-L71,L73,L75,L77=symbols('L71 L73 L75 L77')
-const_7=linsolve([odd_first(L71,L73,L75,L77),odd_second(L71,L73,L75,L77),odd_third(L71,L73,L75,L77)],(L71,L73,L75,L77))
-print const_7,'7'
-L77=symbols('L77')
-print solve([odd_fourth(0.195747170028813*L77, -0.473202817494278*L77, 0.0316320019745384*L77, L77)],L77),'7'
-L77=2.03888188067173
-L71=0.195747170028813*L77
-L73=-0.473202817494278*L77
-L75=0.0316320019745384*L77
